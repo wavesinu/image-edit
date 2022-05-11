@@ -1,0 +1,35 @@
+from PIL import Image
+import os
+import glob
+
+
+im = Image.open('C:/Temp/test.jpg') # 이미지 불러오기
+
+
+print(im.size) # 이미지 크기 출력
+
+
+
+s = int(input("크기 조절 방법을 선택해주세요(1.절반으로 줄이기 2.사이즈 지정): "))
+
+if s == 1:
+    im1 = glob.glob('C:/Temp/test.jpg') # 여러개 이미지 불러올 수 있음(지금은 한개만 불러옴)
+    for f in im1: # 사진 크기 반으로 줄이기
+        img = Image.open(f)
+        img_resize = img.resize((int(img.width / 2), int(img.height / 2)))
+        title, ext = os.path.splitext(f)
+        img_resize.save(title + '_half' + ext)
+        print(img_resize.size)
+elif s == 2:
+    width, length = input("가로, 세로 크기를 순서대로 입력해주세요: ").split()
+    width, length = int(width), int(length)
+
+    im1 = glob.glob('C:/Temp/test.jpg')  # 여러개 이미지 불러올 수 있음(지금은 한개만 불러옴)
+    for f in im1:  # 사진 크기 반으로 줄이기
+        img = Image.open(f)
+        img_resize = img.resize((int(width), int(length)))
+        title, ext = os.path.splitext(f)
+        img_resize.save(title + '_resize' + ext)
+        print(img_resize.size)
+else:
+    print("입력 에러")
