@@ -159,7 +159,7 @@ if __name__ == '__main__':
     image2Menu = Menu(mainMenu,tearoff=False)
     mainMenu.add_cascade(label="메뉴2", menu=image2Menu)
     image2Menu.add_command(label='흑백', command=func_bw)
-    image1Menu.add_separator()
-    image1Menu.add_command(label='사진 자르기', command=func_crop)
+    image2Menu.add_separator()
+    image2Menu.add_command(label='사진 자르기', command=func_crop)
 
     window.mainloop()
