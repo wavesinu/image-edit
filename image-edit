@@ -63,7 +63,7 @@ def func_open():
     photo2 = photo.copy()
     newX = photo2.width
     newY = photo2.height
-    print(newX, ", ",newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
+    print("너비:", newX, " 높이:", newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
     # 복사한 내용을 가지고 displayImage() 함수를 호출하고 있다.
     displayImage(photo2, newX, newY)
 
@@ -102,7 +102,7 @@ def func_resize():
 # 이미지 품질 저하
 def func_quality():
     global window, canvas, paper, photo, photo2, oriX, oriY
-    quality = askinteger("품질 저하", '품질 저하비율을 입력해주세요.(0~100)')
+    quality = askinteger("품질 저하", '품질을 입력해주세요.(0~100)')
 
 
 
