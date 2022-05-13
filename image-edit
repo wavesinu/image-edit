@@ -116,13 +116,7 @@ def func_rotate():
 # 이미지를 흑백으로 하는 기능
 def func_bw():
     global window, canvas, paper, photo, photo2, oriX, oriY
-    photo2 = photo.copy()
-
-    photo2 = ImageOps.grayscale(photo2) # 컬러 -> 흑백
-    newX = photo2.width
-    newY = photo2.height
-    displayImage(photo2, newX, newY)
-    photo = photo2
+    
 
 
 def func_crop():
