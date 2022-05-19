@@ -1,4 +1,5 @@
 # 미니 프토샵 프로그램 만들기
+import os
 from tkinter import *
 from tkinter.filedialog import *
 from tkinter.simpledialog import *
@@ -97,8 +98,8 @@ def func_resize():
     newY =photo2.height
     displayImage(photo2,newX,newY)
 
-    photo = photo2 # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)
-
+    photo = photo2 # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)    
+     
 # 이미지 상하반전
 def func_mirror1():
     global window, canvas, paper, photo, photo2, oriX, oriY
@@ -112,17 +113,34 @@ def func_mirror2():
 # 이미지 회전
 def func_rotate():
     global window, canvas, paper, photo, photo2, oriX, oriY
+    
 
 # 이미지를 흑백으로 하는 기능
 def func_bw():
     global window, canvas, paper, photo, photo2, oriX, oriY
     photo2 = photo.copy()
-
+    
     photo2 = ImageOps.grayscale(photo2) # 컬러 -> 흑백
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
     photo = photo2
+
+# 이미지 품질 저하
+def func_requality():
+    global window, canvas, paper, photo, photo2, oriX, oriY
+    photo2 = photo.copy()
+    qual = askinteger("품질값", '품질값을 입력해주세요.')
+    #이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
+    photo2.save(readFp,'JPEG', quality=int(qual))
+
+    newX = photo2.width
+    newY = photo2.height
+    displayImage(photo2, newX, newY)
+
+    photo = photo2    
+    
+        
 
 
 def func_crop():
@@ -151,6 +169,7 @@ if __name__ == '__main__':
     image1Menu = Menu(mainMenu, tearoff=False)
     mainMenu.add_cascade(label='메뉴1', menu=image1Menu)
     image1Menu.add_command(label='사이즈 조절', command=func_resize)
+    image1Menu.add_command(label='품질 저하', command=func_requality)    
     image1Menu.add_separator()
     image1Menu.add_command(label='상하 반전', command=func_mirror1)
     image1Menu.add_command(label='좌우 반전', command=func_mirror2)
