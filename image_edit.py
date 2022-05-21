@@ -114,6 +114,14 @@ def func_mirror2():
 def func_rotate():
     global window, canvas, paper, photo, photo2, oriX, oriY
     
+    angle = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요.')
+
+    photo2 = photo.copy()
+    photo2 = photo2.rotate(angle)
+
+    displayImage(photo2, oriX, oriY)
+
+    photo = photo2  # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 # 이미지를 흑백으로 하는 기능
 def func_bw():
