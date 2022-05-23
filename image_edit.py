@@ -112,7 +112,20 @@ def func_mirror2():
 
 # 이미지 회전
 def func_rotate():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+     angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(90, 180, 270, 360).')
+     angle +=angle1
+     photo2 = photo.copy()
+     photo2 = photo2.rotate(angle1, expand = 1)  # expand = 1 이미지 안잘리게 해줌
+
+     if (angle%360 == 90 or angle%360 == 270):
+         displayImage(photo2, oriY, oriX)        # 가로 세로를 바꿔서 이미지를 안잘리게 해줌
+     else:
+         displayImage(photo2, oriX, oriY)
+
+     photo2.show()
+
+     photo = photo2  # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
 
 # 이미지를 흑백으로 하는 기능
