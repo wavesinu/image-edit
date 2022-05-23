@@ -143,9 +143,23 @@ def func_requality():
         
 
 
-def func_crop():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+def func_crop(): 
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
+    photo2 = photo.copy()
+    width_start = askinteger("가로시작점", '가로 시작점을 입력해주세요.')
+    height_start = askinteger("세로시작점", '세로 시작점을 입력해주세요.')
+    width_range = askinteger("가로범위", '가로 범위를 입력해주세요.')
+    height_range = askinteger("세로범위", '세로 범위를 입력해주세요.')
+
+    area = (width_start, height_start, width_range, height_range)
+    photo2 = photo2.crop(area)
+    newX = photo2.width
+    newY = photo2.height
+    displayImage(photo2, newX, newY)
+    photo = photo2
+    
+    
 # 메인코드 부분
 if __name__ == '__main__':
     window = Tk() # 윈도우 생성
