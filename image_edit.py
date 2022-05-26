@@ -178,7 +178,7 @@ def func_crop():
 if __name__ == '__main__':
     window = Tk() # 윈도우 생성
     window.geometry("400x400") # 윈도우 크기 설정
-    window.title("포토샵")
+    window.title("미니 포토샵")
 
     mainMenu = Menu(window) # 메뉴바를 생성
     window.config(menu= mainMenu) # 윈도우의 메뉴를 mainMenu 로 설정
