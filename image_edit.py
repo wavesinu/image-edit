@@ -156,7 +156,9 @@ def func_requality():
     photo2 = photo.copy()
     qual = askinteger("품질값", '품질값을 입력해주세요.')
     #이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
-    photo2.save(readFp,'JPEG', quality=int(qual))
+    saveFp = asksaveasfile(parent= window, mode='w', defaultextension='.jpg',
+                           filetypes=(("JPG 파일", "*.jpg;*.jpeg"),("모든파일","*.*"))) 
+    photo2.save(saveFp.name, quality=int(qual))
 
     newX = photo2.width
     newY = photo2.height
