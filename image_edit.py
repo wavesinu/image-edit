@@ -10,9 +10,10 @@ from PIL import Image, ImageFilter, ImageEnhance, ImageOps
 window, canvas, paper = None, None, None
 photo, photo2 = None, None
 oriX, oriY = 0, 0
+angle = 0
 
 def displayImage(img, width, height):
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
     # 화면 크기 설정
     window.geometry(str(width)+'x'+str(height))
@@ -48,7 +49,7 @@ def displayImage(img, width, height):
 def func_open():
     # photo 는 원본 이미지 저장할 변수, photo2 는 이미지 처리후 나타나는 결과 이미지를 저장할 변수,
     # oriX, oriY 원본 이미지의 폭과 높이를 저장할 변수
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
     # 파일다이얼로그(열기)를 통하여 원하는 이미지를 사용자가 선택할 수 있도록 한다.
     readFp = askopenfilename(parent=window, filetypes=(("모든 그림 파일", "*.jpg;*.jpeg;*.bmp;*.png;"
                                                         "*.tif;*.gif"),("모든 파일","*.*")))
@@ -70,7 +71,7 @@ def func_open():
 
 # 파일 저장
 def func_save():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
     # photo2 가 None 이라는 것은 복사된 이미지 객체가 없다...라면
     if photo is None:
         return  # return 을 이용하여 함수를 종료시킨다.
@@ -88,7 +89,7 @@ def func_exit():
 
 # 이미지 사이즈 조절
 def func_resize():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
     width = askinteger("가로 크기", '가로 크기를 입력해주세요.')
     length = askinteger("세로 크기", '세로 크기를 입력해주세요.')
 
@@ -102,22 +103,35 @@ def func_resize():
      
 # 이미지 상하반전
 def func_mirror1():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
 
 # 이미지 좌우반전
 def func_mirror2():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
 
 # 이미지 회전
 def func_rotate():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+     angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(90, 180, 270, 360).') # 각도 입력받기
+     angle +=angle1
+     photo2 = photo.copy()
+     photo2 = photo2.rotate(angle1, expand = 1)  # expand = 1 이미지 안잘리게 해줌 / True도 가능
+
+     if (angle%360 == 90 or angle%360 == 270):
+         displayImage(photo2, oriY, oriX)        # 가로 세로를 바꿔서 이미지를 안잘리게 해줌
+     else:
+         displayImage(photo2, oriX, oriY)
+
+     photo2.show()
+
+     photo = photo2  # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
 
 # 이미지를 흑백으로 하는 기능
 def func_bw():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
     photo2 = photo.copy()
     
     photo2 = ImageOps.grayscale(photo2) # 컬러 -> 흑백
@@ -128,7 +142,7 @@ def func_bw():
 
 # 이미지 품질 저하
 def func_requality():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
     photo2 = photo.copy()
     qual = askinteger("품질값", '품질값을 입력해주세요.')
     #이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
@@ -144,15 +158,29 @@ def func_requality():
     
         
 
+# 이미지 크롭
+def func_crop(): 
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
-def func_crop():
-    global window, canvas, paper, photo, photo2, oriX, oriY
+    photo2 = photo.copy()
+    width_start = askinteger("가로시작점", '가로 시작점을 입력해주세요.')
+    height_start = askinteger("세로시작점", '세로 시작점을 입력해주세요.')
+    width_range = askinteger("가로범위", '가로 범위를 입력해주세요.')
+    height_range = askinteger("세로범위", '세로 범위를 입력해주세요.')
 
+    area = (width_start, height_start, width_range, height_range)
+    photo2 = photo2.crop(area)        # 이미지 crop
+    newX = photo2.width               # 새로운 가로 길이
+    newY = photo2.height              # 새로운 세로 길이
+    displayImage(photo2, newX, newY)
+    photo = photo2
+    
+    
 # 메인코드 부분
 if __name__ == '__main__':
     window = Tk() # 윈도우 생성
     window.geometry("400x400") # 윈도우 크기 설정
-    window.title("포토샵")
+    window.title("미니 포토샵")
 
     mainMenu = Menu(window) # 메뉴바를 생성
     window.config(menu= mainMenu) # 윈도우의 메뉴를 mainMenu 로 설정
