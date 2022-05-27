@@ -99,17 +99,27 @@ def func_resize():
     newY =photo2.height
     displayImage(photo2,newX,newY)
 
-    photo = photo2 # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)    
+    photo = photo2 # 계속 편집 가능(안 적을 시 연속 편집 불가능)    
      
 # 이미지 상하반전
 def func_mirror1():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    
+    photo2 = photo.copy()
+    photo2 = photo2.transpose(Image.FLIP_TOP_BOTTOM) # 상하대칭
+    displayImage(photo2, oriX, oriY)
 
+    photo = photo2
 
 # 이미지 좌우반전
 def func_mirror2():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    
+    photo2 = photo.copy()
+    photo2 = photo2.transpose(Image.FLIP_LEFT_RIGHT)  # 상하대칭
+    displayImage(photo2, oriX, oriY)
 
+    photo = photo2
 
 # 이미지 회전
 def func_rotate():
@@ -126,7 +136,7 @@ def func_rotate():
 
      photo2.show()
 
-     photo = photo2  # 이렇게 해야지 계속 편집 가능(안 적을 시 연속 편집 불가능)
+     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
 
 # 이미지를 흑백으로 하는 기능
@@ -138,7 +148,7 @@ def func_bw():
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 # 이미지 품질 저하
 def func_requality():
@@ -154,7 +164,7 @@ def func_requality():
     newY = photo2.height
     displayImage(photo2, newX, newY)
 
-    photo = photo2    
+    photo = photo2     # 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
         
 
@@ -173,7 +183,7 @@ def func_crop():
     newX = photo2.width               # 새로운 가로 길이
     newY = photo2.height              # 새로운 세로 길이
     displayImage(photo2, newX, newY)
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
     
 # 메인코드 부분
