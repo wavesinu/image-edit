@@ -66,8 +66,9 @@ def func_open():
     newX = photo2.width
     newY = photo2.height
     print(newX, ", ",newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
-    # 복사한 내용을 가지고 displayImage() 함수를 호출하고 있다.
-    displayImage(photo2, newX, newY)
+    
+    photo2.show() # 용량이 커도 빠르게 불러올 수 있음
+    #displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
 
 # 파일 저장
 def func_save():
@@ -100,43 +101,54 @@ def func_resize():
     displayImage(photo2,newX,newY)
 
     photo = photo2 # 계속 편집 가능(안 적을 시 연속 편집 불가능)    
-     
+    
+# 이미지 품질 저하
+def func_requality():
+   global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    photo2 = photo.copy()
+    qual = askinteger("품질값", '품질값을 입력해주세요.')
+    # 이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
+    saveFp = asksaveasfile(parent=window, mode='w', defaultextension='.jpg',
+                           filetypes=(("JPG 파일", "*.jpg;*.jpeg"), ("모든파일", "*.*")))
+    photo2.save(saveFp.name, quality=int(qual))
+
+    exit()
+    
 # 이미지 상하반전
 def func_mirror1():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
     
     photo2 = photo.copy()
-    photo2 = photo2.transpose(Image.FLIP_TOP_BOTTOM) # 상하대칭
-    displayImage(photo2, oriX, oriY)
+    photo2 = photo2.transpose(Image.FLIP_TOP_BOTTOM)  # 상하대칭
+    newX = photo2.width
+    newY = photo2.height
+    displayImage(photo2, newX, newY)
 
     photo = photo2
 
 # 이미지 좌우반전
 def func_mirror2():
-    global window, canvas, paper, photo, photo2, oriX, oriY, angle
-    
     photo2 = photo.copy()
     photo2 = photo2.transpose(Image.FLIP_LEFT_RIGHT)  # 상하대칭
-    displayImage(photo2, oriX, oriY)
+    newX = photo2.width
+    newY = photo2.height
+    displayImage(photo2, newX, newY)
 
     photo = photo2
 
 # 이미지 회전
 def func_rotate():
-     global window, canvas, paper, photo, photo2, oriX, oriY, angle
-     angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(90, 180, 270, 360).') # 각도 입력받기
-     angle +=angle1
-     photo2 = photo.copy()
-     photo2 = photo2.rotate(angle1, expand = 1)  # expand = 1 이미지 안잘리게 해줌 / True도 가능
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(잦은 회전은 삼가해주세요)')  # 각도 입력받기
+    angle += angle1
+    photo2 = photo.copy()
+    photo2 = photo2.rotate(angle1, expand=1)  # expand = 1 이미지 안잘리게 해줌 / True도 가능
 
-     if (angle%360 == 90 or angle%360 == 270):
-         displayImage(photo2, oriY, oriX)        # 가로 세로를 바꿔서 이미지를 안잘리게 해줌
-     else:
-         displayImage(photo2, oriX, oriY)
+    newX = photo2.width
+    newY = photo2.height
+    displayImage(photo2, newX, newY)
 
-     photo2.show()
-
-     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
 
 # 이미지를 흑백으로 하는 기능
@@ -148,23 +160,7 @@ def func_bw():
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
-    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
-
-# 이미지 품질 저하
-def func_requality():
-    global window, canvas, paper, photo, photo2, oriX, oriY, angle
-    photo2 = photo.copy()
-    qual = askinteger("품질값", '품질값을 입력해주세요.')
-    #이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
-    photo2.save(readFp,'JPEG', quality=int(qual))
-
-    newX = photo2.width
-    newY = photo2.height
-    displayImage(photo2, newX, newY)
-
-    photo = photo2     # 계속 편집 가능(안 적을 시 연속 편집 불가능)
-    
-        
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)       
 
 # 이미지 크롭
 def func_crop(): 
