@@ -91,6 +91,7 @@ def func_exit():
 # 이미지 사이즈 조절
 def func_resize():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    
     width = askinteger("가로 크기", '가로 크기를 입력해주세요.')
     length = askinteger("세로 크기", '세로 크기를 입력해주세요.')
 
@@ -105,6 +106,7 @@ def func_resize():
 # 이미지 품질 저하
 def func_requality():
    global window, canvas, paper, photo, photo2, oriX, oriY, angle
+
     photo2 = photo.copy()
     qual = askinteger("품질값", '품질값을 입력해주세요.')
     # 이미지를 저장시키는데 퀄리티를 낯춘 상태로 저장
@@ -119,7 +121,7 @@ def func_mirror1():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
     
     photo2 = photo.copy()
-    photo2 = photo2.transpose(Image.FLIP_TOP_BOTTOM)  # 상하대칭
+    photo2 = photo2.transpose(Image.FLIP_TOP_BOTTOM)  # 상하 반전
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
@@ -128,8 +130,10 @@ def func_mirror1():
 
 # 이미지 좌우반전
 def func_mirror2():
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    
     photo2 = photo.copy()
-    photo2 = photo2.transpose(Image.FLIP_LEFT_RIGHT)  # 상하대칭
+    photo2 = photo2.transpose(Image.FLIP_LEFT_RIGHT)  # 좌우 반전
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
@@ -139,6 +143,7 @@ def func_mirror2():
 # 이미지 회전
 def func_rotate():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    
     angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(잦은 회전은 삼가해주세요)')  # 각도 입력받기
     angle += angle1
     photo2 = photo.copy()
@@ -154,8 +159,8 @@ def func_rotate():
 # 이미지를 흑백으로 하는 기능
 def func_bw():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
-    photo2 = photo.copy()
     
+    photo2 = photo.copy()
     photo2 = ImageOps.grayscale(photo2) # 컬러 -> 흑백
     newX = photo2.width
     newY = photo2.height
