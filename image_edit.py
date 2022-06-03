@@ -68,7 +68,7 @@ def func_open():
     print(newX, ", ",newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
     
     photo2.show() # 용량이 커도 빠르게 불러올 수 있음
-    #displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
+    # displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
 
 # 파일 저장
 def func_save():
@@ -102,10 +102,27 @@ def func_resize():
     displayImage(photo2,newX,newY)
 
     photo = photo2 # 계속 편집 가능(안 적을 시 연속 편집 불가능)    
+    print(newX, newY)  # 편집 후 사이즈 출력
+
+# 비율로 이미지 사이즈 조절
+def func_ratio_resize():
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
+
+    ratio = askinteger("비율 입력", '줄이고 싶은 비율을 입력해 주세요.(0~100)\n\n'
+                                '                 30을 추천합니다.')
+
+    newX = photo2.width * ratio // 100
+    newY = photo2.height * ratio // 100
+    photo2 = photo.copy()
+    photo2 = photo2.resize((int(newX), int(newY)))
+    displayImage(photo2, newX, newY)
+
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
+    print(newX, newY)  # 편집 후 사이즈 출력
     
 # 이미지 품질 저하
 def func_requality():
-   global window, canvas, paper, photo, photo2, oriX, oriY, angle
+    global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
     photo2 = photo.copy()
     qual = askinteger("품질값", '품질값을 입력해주세요.')
@@ -114,7 +131,7 @@ def func_requality():
                            filetypes=(("JPG 파일", "*.jpg;*.jpeg"), ("모든파일", "*.*")))
     photo2.save(saveFp.name, quality=int(qual))
 
-    exit()
+    exit()  # 편집 후 프로그램 종료
     
 # 이미지 상하반전
 def func_mirror1():
@@ -126,7 +143,7 @@ def func_mirror1():
     newY = photo2.height
     displayImage(photo2, newX, newY)
 
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 # 이미지 좌우반전
 def func_mirror2():
@@ -138,7 +155,7 @@ def func_mirror2():
     newY = photo2.height
     displayImage(photo2, newX, newY)
 
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 # 이미지 회전
 def func_rotate():
@@ -165,6 +182,7 @@ def func_bw():
     newX = photo2.width
     newY = photo2.height
     displayImage(photo2, newX, newY)
+    
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)       
 
 # 이미지 크롭
@@ -182,6 +200,7 @@ def func_crop():
     newX = photo2.width               # 새로운 가로 길이
     newY = photo2.height              # 새로운 세로 길이
     displayImage(photo2, newX, newY)
+    
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
     
     
@@ -207,7 +226,8 @@ if __name__ == '__main__':
 
     image1Menu = Menu(mainMenu, tearoff=False)
     mainMenu.add_cascade(label='메뉴1', menu=image1Menu)
-    image1Menu.add_command(label='사이즈 조절', command=func_resize)
+    image1Menu.add_command(label='사이즈 조절(지정값)', command=func_resize)
+    image1Menu.add_command(label='사이즈 조절(비율)', command=func_ratio_resize)
     image1Menu.add_command(label='품질 저하', command=func_requality)    
     image1Menu.add_separator()
     image1Menu.add_command(label='상하 반전', command=func_mirror1)
