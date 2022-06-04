@@ -17,7 +17,11 @@ def display_image(img, width, height):
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
     # 화면 크기 설정
-    window.geometry(str(width) + 'x' + str(height))
+    if width + height <= 1000:
+        window.geometry(str(int(width*1.5)) + 'x' + str(int(height*1.5)))
+    else:
+        window.geometry(str(width) + 'x' + str(height))
+    
     # print(str(width)+", "+str(height))
     # 기존에 canvas 에 출력한 그림이 있다면
     if canvas is not None:
@@ -67,14 +71,9 @@ def open_image():
     photo2 = photo.copy()
     newX = photo2.width
     newY = photo2.height
-    print(newX, ", ", newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
+    print("높이:", newX, " 너비:", newY)  # 복사된 이미지의 높이와 너비값을 출력
 
     photo2.show()  # 용량이 커도 빠르게 불러올 수 있음
-    # displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
-
-    print(newX, ", ",newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
-    
-    photo2.show() # 용량이 커도 빠르게 불러올 수 있음
     # displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
 
 # 파일 저장
@@ -112,7 +111,7 @@ def func_ratio_resize():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
     ratio = askinteger("비율 입력", '줄이고 싶은 비율을 입력해 주세요.(0~100)\n\n'
-                                '                 30을 추천합니다.')
+                                '                 30을 권장합니다.')
 
     newX = photo2.width * ratio // 100
     newY = photo2.height * ratio // 100
@@ -121,7 +120,7 @@ def func_ratio_resize():
     display_image(photo2, newX, newY)
 
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
-    print(newX, newY)  # 편집 후 사이즈 출력
+    print("높이:", newX, " 너비:", newY)  # 편집 후 사이즈 출력
 
 
 # 이미지 품질 저하
@@ -166,7 +165,7 @@ def flip_image2():
 def rotate_image():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
-    angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(잦은 회전은 삼가해주세요)')  # 각도 입력받기
+    angle1 = askinteger("이미지 회전", '이미지 회전 각도를 입력해주세요(90, 180, 270, 360)')  # 각도 입력받기
     angle += angle1
     photo2 = photo.copy()
     photo2 = photo2.rotate(angle1, expand=1)  # expand = 1 이미지 안잘리게 해줌 / True도 가능
@@ -187,6 +186,7 @@ def bw_image():
     newX = photo2.width
     newY = photo2.height
     display_image(photo2, newX, newY)
+    
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 
@@ -195,8 +195,8 @@ def crop_image():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
     photo2 = photo.copy()
-    width_start = askinteger("가로시작점", '가로 시작점을 입력해주세요.')
-    height_start = askinteger("세로시작점", '세로 시작점을 입력해주세요.')
+    width_start = askinteger("가로시작점", '가로 시작점을 입력해주세요.(좌측상단:0)')
+    height_start = askinteger("세로시작점", '세로 시작점을 입력해주세요.(좌측상단:0)')
     width_range = askinteger("가로범위", '가로 범위를 입력해주세요.')
     height_range = askinteger("세로범위", '세로 범위를 입력해주세요.')
 
@@ -205,8 +205,9 @@ def crop_image():
     newX = photo2.width  # 새로운 가로 길이
     newY = photo2.height  # 새로운 세로 길이
     display_image(photo2, newX, newY)
+    
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
-
+    print("높이:", newX, " 너비:", newY)  # 편집 후 사이즈 출력
 
 # 메인코드 부분
 if __name__ == '__main__':
