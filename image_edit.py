@@ -72,6 +72,10 @@ def open_image():
     photo2.show()  # 용량이 커도 빠르게 불러올 수 있음
     # displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
 
+    print(newX, ", ",newY)  # 복사된 이미지의 높이와 너비값을 출력해봄
+    
+    photo2.show() # 용량이 커도 빠르게 불러올 수 있음
+    # displayImage(photo2, newX, newY) # 용량이 큰 사진은 불러오는데 오랜 시간이 걸려 먼저 빠르게 불러오기 위해 주석처리
 
 # 파일 저장
 def save_image():
@@ -143,7 +147,7 @@ def flip_image1():
     newY = photo2.height
     display_image(photo2, newX, newY)
 
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 
 # 이미지 좌우반전
@@ -156,7 +160,7 @@ def flip_image2():
     newY = photo2.height
     display_image(photo2, newX, newY)
 
-    photo = photo2
+    photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 
 # 이미지 회전
