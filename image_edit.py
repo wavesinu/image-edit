@@ -133,8 +133,7 @@ def deteriorate_quality():
     saveFp = asksaveasfile(parent=window, mode='w', defaultextension='.jpg',
                            filetypes=(("JPG 파일", "*.jpg;*.jpeg"), ("모든파일", "*.*")))
     photo2.save(saveFp.name, quality=int(qual))
-
-    exit()
+    window.destroy
 
 
 # 이미지 상하반전
