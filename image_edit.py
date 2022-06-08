@@ -177,7 +177,7 @@ def rotate_image():
     photo = photo2  # 계속 편집 가능(안 적을 시 연속 편집 불가능)
 
 
-# 이미지를 흑백으로 하는 기능
+# 이미지 흑백으로 처리
 def bw_image():
     global window, canvas, paper, photo, photo2, oriX, oriY, angle
 
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     # add_command() 는 메뉴 항목을 생성해준다.
     fileMenu.add_command(label='파일 열기', command=open_image)
     fileMenu.add_command(label='파일 저장', command=save_image)
-    # 구분선 추가하기
+    # 구분선 추가
     fileMenu.add_separator()
     fileMenu.add_command(label='종료', command=window.destroy)
 
